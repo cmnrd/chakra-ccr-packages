@@ -1,5 +1,5 @@
 pkgname=openocd
-pkgver=0.6.1
+pkgver=0.7.0
 pkgrel=1
 pkgdesc="Debugging, in-system programming and boundary-scan testing for embedded target devices"
 arch=('i686' 'x86_64')
@@ -9,7 +9,7 @@ depends=('libftdi')
 options=(!strip !libtool)
 install=openocd.install
 source=("http://downloads.sourceforge.net/sourceforge/$pkgname/$pkgname-$pkgver.tar.bz2")
-md5sums=('946421efc2414ff89bdaf3f588b230f8')
+md5sums=('8977a26a4e3a529e1c4fcc0df587a6a4')
 
 # what features should be enabled on build
 # 'ecos','zy1000' seams not to be supported on linux
