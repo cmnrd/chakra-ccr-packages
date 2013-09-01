@@ -1,0 +1,89 @@
+# Maintainer: Christian Menard <chrism333@gmx.de>
+# Contributor: Martin Schmölzer <mschmoelzer@gmail.com>
+
+# Based on the summon-arm-toolchain script by Piotr Esden-Tempski
+# https://github.com/esden/summon-arm-toolchain
+
+pkgname=cross-arm-none-eabi-gcc
+pkgver=4.7.2
+pkgrel=1
+_newlibver=1.20.0
+pkgdesc="The GNU Compiler Collection - cross compiler for ARM EABI (bare-metal) target."
+arch=(i686 x86_64)
+url="http://gcc.gnu.org/"
+license=('GPL' 'LGPL')
+groups=('cross-arm-none-eabi')
+depends=('cross-arm-none-eabi-binutils>=2.23' 'gmp' 'mpfr' 'libmpc')
+makedepends=('flex' 'bison')
+conflicts=('cross-arm-none-eabi-gcc-base')
+options=(!libtool !emptydirs !strip zipman docs)
+source=(ftp://ftp.gnu.org/gnu/gcc/gcc-${pkgver}/gcc-${pkgver}.tar.bz2
+        ftp://sources.redhat.com/pub/newlib/newlib-${_newlibver}.tar.gz
+        gcc-${pkgver}-cortex-multilib.patch
+        gcc-${pkgver}-no-exceptions.patch
+        newlib-redboot-movs.patch)
+sha256sums=('8a9283d7010fb9fe5ece3ca507e0af5c19412626384f8a5e9434251ae100b084'
+            'c644b2847244278c57bec2ddda69d8fab5a7c767f3b9af69aa7aa3da823ff692'
+            '33029968683989697ce51c058119ac0e3ac78078c1855645f753ffa50b1ec253'
+            '203566dc05fe8caa0699e28fac29bb9ec7ffb09f6b1c8a17966cb7914fbceda7'
+            'b07008b299e5b09e19964685c861caa23a895032749df81d24f1f33c754638bd')
+
+build() {
+  export CFLAGS="-O2 -pipe"
+  export CXXFLAGS="-O2 -pipe"
+
+  cd ${srcdir}
+
+  # Move newlib and libgloss to gcc source directory
+  mv ${srcdir}/newlib-${_newlibver}/newlib   gcc-${pkgver}
+  mv ${srcdir}/newlib-${_newlibver}/libgloss gcc-${pkgver}
+
+  cd ${srcdir}/gcc-${pkgver}
+
+  patch -Np1 -i "${srcdir}/gcc-${pkgver}-cortex-multilib.patch"
+  patch -Np1 -i "${srcdir}/gcc-${pkgver}-no-exceptions.patch"
+  patch -Np1 -i "${srcdir}/newlib-redboot-movs.patch"
+
+  mkdir build
+  cd build
+
+  ../configure --target=arm-none-eabi \
+               --prefix=/usr \
+               --libexecdir=/usr/lib \
+               --enable-multilib \
+               --enable-interwork \
+               --enable-languages=c,c++ \
+               --with-newlib \
+               --with-gnu-as \
+               --with-gnu-ld \
+               --disable-nls \
+               --disable-shared \
+               --disable-threads \
+               --with-headers=newlib/libc/include \
+               --disable-libssp \
+               --disable-libstdcxx-pch \
+               --disable-libmudflap \
+               --disable-libgomp \
+               --with-system-zlib \
+               --disable-newlib-supplied-syscalls
+
+  make
+}
+
+package() {
+  cd ${srcdir}/gcc-${pkgver}/build
+
+  make DESTDIR=${pkgdir} install
+
+  # libiberty.a conflicts with host version
+  rm -f  $pkgdir/usr/lib/libiberty.a
+
+  # We don't want these files in a cross version
+  rm -f  $pkgdir/usr/share/man/man7/fsf-funding.7*
+  rm -f  $pkgdir/usr/share/man/man7/gfdl.7*
+  rm -f  $pkgdir/usr/share/man/man7/gpl.7*
+  rm -rf $pkgdir/usr/share/info
+  rm -rf $pkgdir/usr/share/gcc-${pkgver}
+}
+
+# vim: set ts=2 sw=2 ft=sh noet:
