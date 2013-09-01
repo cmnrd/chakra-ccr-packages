@@ -1,0 +1,54 @@
+# Maintainer: Christian Menard <ReaperMan333@gmx.net>
+# Contributor: Martin Schmölzer <mschmoelzer@gmail.com>
+
+# Based on the summon-arm-toolchain script by Piotr Esden-Tempski
+# https://github.com/esden/summon-arm-toolchain
+
+pkgname=cross-arm-none-eabi-binutils
+pkgver=2.23.1
+pkgrel=1
+pkgdesc="A set of programs to assemble and manipulate binary and object files for the ARM EABI (bare-metal) target."
+arch=(i686 x86_64)
+url="http://www.gnu.org/software/binutils/"
+license=('GPL')
+groups=('cross-arm-none-eabi')
+depends=('glibc' 'zlib')
+options=(!libtool !emptydirs)
+source=(ftp://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.bz2
+        cortex-allow-svc-instruction.patch)
+sha256sums=('2ab2e5b03e086d12c6295f831adad46b3e1410a3a234933a2e8fac66cb2e7a19'
+            '35e096b30c62e33a235b634b3b6e7243d4167d7a162122612db60153c0412134')
+
+build() {
+  cd ${srcdir}/binutils-${pkgver}
+
+  patch -Np1 -i "${srcdir}/cortex-allow-svc-instruction.patch"
+
+  mkdir build
+  cd build
+
+  ../configure --target=arm-none-eabi \
+               --prefix=/usr \
+               --enable-multilib \
+               --enable-interwork \
+               --with-gnu-as \
+               --with-gnu-ld \
+               --disable-nls
+  make
+}
+
+package() {
+  cd ${srcdir}/binutils-${pkgver}/build
+
+  #make prefix=${pkgdir}/usr install
+  make DESTDIR=${pkgdir} install
+
+  # Remove libiberty (conflicts with host binutils) and manpages for MS Windows tools
+  rm -f ${pkgdir}/usr/lib/libiberty.a
+  rm -f ${pkgdir}/usr/share/man/man1/arm-none-eabi-{dlltool,nlmconv,windres,windmc}*
+
+  # Remove info documents
+  rm -rf ${pkgdir}/usr/share/info
+}
+
+# vim: set ts=2 sw=2 ft=sh noet:
