@@ -6,7 +6,7 @@
 # Contributor: Douglas Soares de Andrade <dsa@aur.archlinux.org>
 
 pkgname=python2-matplotlib
-pkgver=1.2.1
+pkgver=1.3.0
 pkgrel=1
 pkgdesc="A python plotting library, making publication quality plots"
 arch=('i686' 'x86_64')
@@ -18,20 +18,13 @@ makedepends=('python-numpy' 'pyqt'
              'pygtk' 'python2-six' 'ghostscript' 'texlive-bin')
 optdepends=('pygtk: for use with the GTK or GTKAgg backend'
             'tk: used by the TkAgg backend'
-            'ghostscript: usetex dependencies' 
+            'ghostscript: usetex dependencies'
             'texlive-bin: usetex dependencies')
 source=("http://sourceforge.net/projects/matplotlib/files/matplotlib/matplotlib-${pkgver}/matplotlib-${pkgver}.tar.gz")
-sha1sums=('82fc44d0047a713c1b0b1b4ea2503e6a41c57f98')
+sha1sums=('4bcf177bbe2a1a576fbc0896e69c2de2cf7429ae')
 
 build() {
    cd "${srcdir}"/matplotlib-${pkgver}
-
-   # use system python-six
-   rm lib/six.py
-
-   # remove internal copies of pyparsing
-   rm -r lib/matplotlib/pyparsing_py{2,3}.py
-   sed -i -e 's/matplotlib.pyparsing_py[23]/pyparsing/g' lib/matplotlib/{mathtext,fontconfig_pattern}.py
 
    cd ..
    cp -a matplotlib-${pkgver} matplotlib-${pkgver}-py3
@@ -39,11 +32,11 @@ build() {
    # Build python2
    cd matplotlib-${pkgver}
    for file in $(find . -name '*.py' -print); do
-      sed -i -e "s|^#!.*/usr/bin/python|#!/usr/bin/python2|" \
+sed -i -e "s|^#!.*/usr/bin/python|#!/usr/bin/python2|" \
              -e "s|^#!.*/usr/bin/env *python|#!/usr/bin/env python2|" ${file}
    done
 
-   python2 setup.py build
+python2 setup.py build
 
 }
 
