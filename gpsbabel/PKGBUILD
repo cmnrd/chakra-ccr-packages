@@ -3,7 +3,7 @@
 # Contributor: Claudio sbarbi Sabattoli <claudio.sabattoli@gmail.com>
 
 pkgname=gpsbabel
-pkgver=1.4.2
+pkgver=1.4.4
 pkgrel=1
 pkgdesc="Reads, writes, and manipulates GPS waypoints in a variety of formats"
 arch=('i686' 'x86_64')
@@ -11,7 +11,7 @@ url="http://www.gpsbabel.org"
 license=('GPL')
 depends=('libusb-compat' 'expat' 'libusb-compat' 'libxslt' 'docbook-xsl')
 source=(gpsbabel-${pkgver}.tar.gz::http://archlinux-stuff.googlecode.com/files/gpsbabel-${pkgver}.tar.gz)
-md5sums=('76ea9f7852be2e98aa18976c4697ca93')
+md5sums=('6c4c8f0cb9fcf9f8302585148878f174')
 
 build() {
   cd ${srcdir}/gpsbabel-${pkgver}
