@@ -1,0 +1,31 @@
+# Maintainer: Christian Menard <chrism333@gmx.de>
+# Contributor: Zie Evolution <zie.evolution@googlemail.com>
+# Arch maintainer: tobias <tobias@archlinux.org>
+
+_pkgbase=gnome-sharp
+pkgname=('gnome-vfs-sharp')
+pkgdesc="Mono bindings for GNOME-VFS"
+depends=('gtk-sharp-2' 'gnome-vfs')
+pkgver=2.24.2
+pkgrel=1
+arch=(i686 x86_64)
+license=(LGPL)
+url="http://gtk-sharp.sourceforge.net"
+makedepends=('gtk-sharp-2')
+options=('!libtool')
+source=(http://ftp.gnome.org/pub/gnome/sources/${_pkgbase}/2.24/${_pkgbase}-${pkgver}.tar.bz2)
+md5sums=('3b38f53960c736d4afb8f04204efe98b')
+
+build() {
+  # get rid of that .wapi errors; thanks to brice
+  export MONO_SHARED_DIR="${srcdir}/weird"
+  mkdir -p "${MONO_SHARED_DIR}"
+
+  cd "${srcdir}/${_pkgbase}-${pkgver}"
+  ./configure --prefix=/usr --sysconfdir=/etc
+  make
+}
+package() {
+  cd "${srcdir}/${_pkgbase}-${pkgver}"
+  make -C gnomevfs install DESTDIR="${pkgdir}"
+}
