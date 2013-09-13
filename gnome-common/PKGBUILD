@@ -1,4 +1,5 @@
-# Maintainer: Jan de Groot <jgc@archlinux.org>
+# Maintainer: Christian Menard <chrism333@gmx.de>
+# Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgname=gnome-common
 pkgver=3.7.4
