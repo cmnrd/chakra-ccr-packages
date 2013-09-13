@@ -8,7 +8,8 @@ pkgdesc="Easy to use, linux based program for managing your geocaches"
 arch=('any')
 url="http://opencachemanage.sourceforge.net/"
 license=('GPL')
-depends=('libgnome-sharp' 'gpsbabel' 'mono' 'ndesk-dbus' 'shared-mime-info' 'webkit-sharp' 'gconf-sharp' 'filesystem-extra')
+depends=('libgnome-sharp' 'gpsbabel' 'mono' 'ndesk-dbus-glib' 'shared-mime-info' 'webkit-sharp' 
+         'gconf-sharp' 'filesystem-extra')
 optdepends=('qlandkartegt: display cache on map'
             'gpsbabel: send cache to GPS')
 install=$pkgname.install
