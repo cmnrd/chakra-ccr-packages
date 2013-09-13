@@ -7,7 +7,7 @@ pkgname=('gnome-vfs-sharp')
 pkgdesc="Mono bindings for GNOME-VFS"
 depends=('gtk-sharp-2' 'gnome-vfs')
 pkgver=2.24.2
-pkgrel=1
+pkgrel=2
 arch=(i686 x86_64)
 license=(LGPL)
 url="http://gtk-sharp.sourceforge.net"
@@ -18,11 +18,11 @@ md5sums=('3b38f53960c736d4afb8f04204efe98b')
 
 build() {
   # get rid of that .wapi errors; thanks to brice
-  export MONO_SHARED_DIR="${srcdir}/weird"
+  export MONO_SHARED_DIR="${srcdir}/wapi"
   mkdir -p "${MONO_SHARED_DIR}"
 
   cd "${srcdir}/${_pkgbase}-${pkgver}"
-  ./configure --prefix=/usr --sysconfdir=/etc
+  ./configure --prefix=/extra/usr --sysconfdir=/extra/etc
   make
 }
 package() {
