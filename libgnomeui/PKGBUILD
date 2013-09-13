@@ -1,10 +1,10 @@
-# Maintainer: kote <mgonzlezgmz at gmail dot com>
-# Arch linux maintainer:
-# Maintainer: Jan de Groot <jgc@archlinux.org>
+# Maintainer: Christian Menard <chrism333@gmx.de>
+# Contributor: kote <mgonzlezgmz at gmail dot com>
+# Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgname=libgnomeui
 pkgver=2.24.5
-pkgrel=1
+pkgrel=2
 pkgdesc="User Interface library for GNOME"
 arch=('i686' 'x86_64')
 license=('LGPL')
@@ -17,7 +17,7 @@ sha256sums=('ae352f2495889e65524c979932c909f4629a58e64290fb0c95333373225d3c0f')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
-  ./configure --prefix=/usr --sysconfdir=/etc \
+  ./configure --prefix=/extra/usr --sysconfdir=/extra/etc \
       --localstatedir=/var --disable-static \
       --libexecdir=/usr/lib/libgnomeui
   make
