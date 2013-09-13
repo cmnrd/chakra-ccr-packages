@@ -3,7 +3,7 @@
 # Contributor: tobias <tobias@archlinux.org>
 
 pkgname=gtk-sharp-2
-pkgver=2.12.10
+pkgver=2.12.11
 pkgrel=3
 pkgdesc="gtk2 bindings for C-sharp"
 arch=(i686 x86_64)
@@ -13,25 +13,25 @@ depends=('mono>=2.4' 'libglade>=2.6.4' 'gtk2>=2.18.0')
 makedepends=('pkgconfig' 'monodoc')
 conflicts=('gtk#')
 options=('!libtool' '!makeflags')
-source=(http://ftp.gnome.org/pub/GNOME/sources/gtk-sharp/2.12/gtk-sharp-${pkgver}.tar.gz
-glue-glib2.32.1_fix.patch)
-sha256sums=('8cffad11a5bd285f130d4a7ac70d8ee1d8071a128b0a1a577d8f92cb04dba5f8'
-            '3027c5d689c6b45a2c6e4e2b769b1e87d4a48b4d6d50b27f30c43f7df3cf027e')
+source=(http://download.mono-project.com/sources/gtk-sharp212/gtk-sharp-${pkgver}.tar.bz2 
+glue-glib_fix.patch)
+md5sums=('c278da6a472c6c13b698af012f543c64' 'f7e8b5ce81249775e21610b243440862')
 
 build() {
  # get rid of that .wapi errors; thanks to brice
   
-  export MONO_SHARED_DIR="${srcdir}/weird"
+  export MONO_SHARED_DIR="${srcdir}/wapi"
   mkdir -p "${MONO_SHARED_DIR}"
 
-  msg "Applying patch for glib2.32.1 header inclusion"
   cd "${srcdir}/gtk-sharp-${pkgver}/glib/glue"
-  patch -uNp1 -i "${srcdir}/glue-glib2.32.1_fix.patch"
+  patch -uNp1 -i "${srcdir}/glue-glib_fix.patch"
   
-  msg "Beginning build"
   cd "${srcdir}/gtk-sharp-${pkgver}"
-  ./configure --prefix=/usr --sysconfdir=/etc --disable-static || return 1
-  make || return 1
-  make GACUTIL="/usr/bin/gacutil /root ${pkgdir}/usr/lib" \
-     	 DESTDIR="${pkgdir}" install || return 1
+  ./configure --prefix=/extra/usr --sysconfdir=/extra/etc --disable-static
+  make
+}
+
+package() {
+  cd "${srcdir}/gtk-sharp-${pkgver}"
+  make DESTDIR="${pkgdir}" install
 }

@@ -1,0 +1,11 @@
+diff -Naur glue/thread.c glue.new/thread.c
+--- glue/thread.c	2009-01-08 02:54:06.000000000 +1000
++++ glue.new/thread.c	2012-12-14 14:33:26.867379803 +1000
+@@ -20,7 +20,7 @@
+  */
+ 
+ 
+-#include <glib/gthread.h>
++#include <glib.h>
+ 
+ gboolean glibsharp_g_thread_supported (void);
