@@ -1,0 +1,30 @@
+# Maintainer: Zie Evolution <zie.evolution@googlemail.com>
+# Arch maintainer: tobias <tobias@archlinux.org>
+
+pkgbase=gnome-sharp
+pkgname=('libgnome-sharp')
+pkgdesc="Mono bindings for libgnome"
+depends=('art-sharp' 'gnome-vfs-sharp' 'libgnomeui')
+pkgver=2.24.2
+pkgrel=1
+arch=(i686 x86_64)
+license=(LGPL)
+url="http://gtk-sharp.sourceforge.net"
+makedepends=('gtk-sharp-2')
+options=('!libtool')
+source=(http://ftp.gnome.org/pub/gnome/sources/${pkgbase}/2.24/${pkgbase}-${pkgver}.tar.bz2)
+md5sums=('3b38f53960c736d4afb8f04204efe98b')
+
+build() {
+  # get rid of that .wapi errors; thanks to brice
+  export MONO_SHARED_DIR="${srcdir}/weird"
+  mkdir -p "${MONO_SHARED_DIR}"
+
+  cd "${srcdir}/${pkgbase}-${pkgver}"
+  ./configure --prefix=/usr --sysconfdir=/etc
+  make
+}
+package() {
+  cd "${srcdir}/${pkgbase}-${pkgver}"
+  make -C gnome install DESTDIR="${pkgdir}"
+}
