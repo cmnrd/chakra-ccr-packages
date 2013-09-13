@@ -1,0 +1,34 @@
+# Maintainer: iruel <cockmomgler at gmail dot org>
+# Maintainer: tobias <tobias@archlinux.org>
+
+pkgbase=gnome-sharp
+pkgname=('gconf-sharp')
+pkgver=2.24.2
+pkgrel=2
+arch=(i686 x86_64)
+license=(LGPL)
+url="http://gtk-sharp.sourceforge.net"
+makedepends=('gtk-sharp-2' 'libgnomeui' 'monodoc')
+depends=('filesystem-extra')
+options=('!libtool')
+source=(http://ftp.gnome.org/pub/gnome/sources/gnome-sharp/2.24/${pkgbase}-${pkgver}.tar.bz2)
+md5sums=('3b38f53960c736d4afb8f04204efe98b')
+
+build() {
+  # get rid of that .wapi errors; thanks to brice
+  export MONO_SHARED_DIR="${srcdir}/wapi"
+  mkdir -p "${MONO_SHARED_DIR}"
+
+  cd "${srcdir}/${pkgbase}-${pkgver}"
+  ./configure --prefix=/extra/usr --sysconfdir=/extra/etc
+  make
+}
+
+package() {
+  pkgdesc="Mono bindings for GConf"
+  depends=('gtk-sharp-2' 'gconf')
+
+  cd "${srcdir}/${pkgbase}-${pkgver}"
+  make -C gconf/GConf install DESTDIR="${pkgdir}"
+  make -C gconf/tools install DESTDIR="${pkgdir}"
+}
