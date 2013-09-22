@@ -6,13 +6,13 @@
 _pkgbase=gnome-sharp
 pkgname=('art-sharp')
 pkgver=2.24.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Mono bindings for libart"
 arch=(i686 x86_64)
 license=(LGPL)
 url="http://gtk-sharp.sourceforge.net"
-depends=('gtk-sharp-2' 'libart-lgpl')
-makedepends=('gtk-sharp-2')
+depends=('gtk-sharp-2' 'libart-lgpl' 'mono-extra')
+makedepends=('gtk-sharp-2' 'libgnomeui' 'monodoc')
 options=('!libtool')
 source=(http://ftp.gnome.org/pub/gnome/sources/gnome-sharp/2.24/${_pkgbase}-${pkgver}.tar.bz2)
 md5sums=('3b38f53960c736d4afb8f04204efe98b')

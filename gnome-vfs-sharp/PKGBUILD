@@ -5,13 +5,13 @@
 _pkgbase=gnome-sharp
 pkgname=('gnome-vfs-sharp')
 pkgdesc="Mono bindings for GNOME-VFS"
-depends=('gtk-sharp-2' 'gnome-vfs')
+depends=('gtk-sharp-2' 'gnome-vfs' 'mono-extra')
 pkgver=2.24.2
-pkgrel=2
+pkgrel=3
 arch=(i686 x86_64)
 license=(LGPL)
 url="http://gtk-sharp.sourceforge.net"
-makedepends=('gtk-sharp-2')
+makedepends=('gtk-sharp-2' 'libgnomeui' 'monodoc')
 options=('!libtool')
 source=(http://ftp.gnome.org/pub/gnome/sources/${_pkgbase}/2.24/${_pkgbase}-${pkgver}.tar.bz2)
 md5sums=('3b38f53960c736d4afb8f04204efe98b')

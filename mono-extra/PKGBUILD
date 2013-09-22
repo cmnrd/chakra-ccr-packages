@@ -1,0 +1,19 @@
+# Maintainer: Christian Menard <chrism333@gmx.de>
+
+pkgname=mono-extra
+pkgver=213.09.22
+pkgrel=1
+pkgdesc="Set up environment variables so that mono works with filesystem-extra"
+arch=('i686' 'x86_64')
+depends=('filesystem-extra')
+license=('GPL')
+source=(mono-extra.sh)
+md5sums=('01a4b20910ca8fbf8ff06b103c2c3dc6')
+url='http://dummy'
+
+
+package() {
+  mkdir -p ${pkgdir}/etc/profile.d/
+  cp mono-extra.sh ${pkgdir}/etc/profile.d/
+
+} 
