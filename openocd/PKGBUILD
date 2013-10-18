@@ -1,12 +1,13 @@
 pkgname=openocd
 pkgver=0.7.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Debugging, in-system programming and boundary-scan testing for embedded target devices"
 arch=('i686' 'x86_64')
 url="http://openocd.berlios.de"
 license=('GPL')
 depends=('libftdi')
-options=(!strip !libtool)
+makedepends=('git' 'automake>=1.11' 'autoconf' 'libtool' 'tcl')
+options=(!strip)
 install=openocd.install
 source=("http://downloads.sourceforge.net/sourceforge/$pkgname/$pkgname-$pkgver.tar.bz2")
 md5sums=('8977a26a4e3a529e1c4fcc0df587a6a4')
