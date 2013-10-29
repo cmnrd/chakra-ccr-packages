@@ -10,8 +10,8 @@
 pkgbase=handbrake-svn
 pkgname=handbrake-svn
 _svnmod=HandBrake
-pkgver=5505
-pkgrel=2
+pkgver=5863
+pkgrel=1
 arch=('i686' 'x86_64')
 url="http://handbrake.fr/"
 license=('GPL')
