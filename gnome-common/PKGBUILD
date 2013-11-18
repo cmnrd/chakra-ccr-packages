@@ -3,18 +3,18 @@
 
 pkgname=gnome-common
 pkgver=3.10.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Common development macros for GNOME"
 arch=(any)
 license=('GPL')
 url="http://www.gnome.org"
-depends=('filesystem-extra')
+depends=()
 source=(http://download.gnome.org/sources/$pkgname/${pkgver:0:4}/$pkgname-$pkgver.tar.xz)
 sha256sums=('aed69474a671e046523827f73ba5e936d57235b661db97900db7356e1e03b0a3')
 
 build() {
   cd $pkgname-$pkgver
-  ./configure --prefix=/extra/usr
+  ./configure --prefix=/usr
   make
 }
 
