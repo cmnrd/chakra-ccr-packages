@@ -10,13 +10,13 @@
 pkgbase=handbrake-svn
 pkgname=handbrake-svn
 _svnmod=HandBrake
-pkgver=5863
+pkgver=5893
 pkgrel=1
 arch=('i686' 'x86_64')
 url="http://handbrake.fr/"
 license=('GPL')
 pkgdesc="Multiplatform, multithreaded DVD to MPEG-4/H264/Theora converter (gui + cli)"
-depends=('dbus-glib' 'desktop-file-utils' 'gst-plugins-base' 'gtk3' 'hicolor-icon-theme' 'libass' 'libnotify' 'libsamplerate' 'libtheora' 'filesystem-extra')
+depends=('dbus-glib' 'desktop-file-utils' 'gst-plugins-base' 'gtk3' 'hicolor-icon-theme' 'libass' 'libnotify' 'libsamplerate' 'libtheora')
 optdepends=('gst-plugins-base: For Preview Window'
               'gst-plugins-bad: For Preview Window'
               'gst-plugins-good: For Preview Window'
@@ -58,26 +58,8 @@ build() {
   unset CXXFLAGS
   unset LDFLAGS
   
-  PKG_CONFIG_PATH=/extra/usr/lib/pkgconfig CC=gcc CXX=g++ ./configure --gcc=/usr/bin/gcc --force --verbose --prefix=/extra/usr --disable-gtk-update-checks --launch-jobs=0
+  PKG_CONFIG_PATH=/extra/usr/lib/pkgconfig CC=gcc CXX=g++ ./configure --gcc=/usr/bin/gcc --force --verbose --prefix=/usr --disable-gtk-update-checks --launch-jobs=0
 
-  # Add all dependencies to build flags
-  export GHB_CFLAGS=$(pkg-config --cflags gudev-1.0)
-  export GHB_LIBS=$(pkg-config --libs gudev-1.0)
-  GHB_CFLAGS+=$(pkg-config --cflags gtk+-3.0)
-  GHB_LIBS+=$(pkg-config --libs gtk+-3.0)
-  GHB_CFLAGS+=$(pkg-config --cflags dbus-1)
-  GHB_LIBS+=$(pkg-config --libs dbus-1)
-  GHB_CFLAGS+=$(pkg-config --cflags dbus-glib-1)
-  GHB_LIBS+=$(pkg-config --libs dbus-glib-1)
-  GHB_CFLAGS+=$(pkg-config --cflags libnotify)
-  GHB_LIBS+=$(pkg-config --libs libnotify)
-  GHB_CFLAGS+=$(pkg-config --cflags gstreamer-plugins-base-1.0)
-  GHB_LIBS+=$(pkg-config --libs gstreamer-plugins-base-1.0)
-  GHB_CFLAGS+=$(pkg-config --cflags gstreamer-video-1.0)
-  GHB_LIBS+=$(pkg-config --libs gstreamer-video-1.0)
-  GHB_CFLAGS+=$(pkg-config --cflags gstreamer-pbutils-1.0)
-  GHB_LIBS+=$(pkg-config --libs gstreamer-pbutils-1.0)
-  
   # Create build-specific temporary directory for ffmpeg
   install -d -m755 "build/ffmpeg_tmp"
 
