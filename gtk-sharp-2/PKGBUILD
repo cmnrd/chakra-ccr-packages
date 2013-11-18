@@ -4,7 +4,7 @@
 
 pkgname=gtk-sharp-2
 pkgver=2.12.11
-pkgrel=3
+pkgrel=4
 pkgdesc="gtk2 bindings for C-sharp"
 arch=(i686 x86_64)
 license=('LGPL')
@@ -27,7 +27,7 @@ build() {
   patch -uNp1 -i "${srcdir}/glue-glib_fix.patch"
   
   cd "${srcdir}/gtk-sharp-${pkgver}"
-  ./configure --prefix=/extra/usr --sysconfdir=/extra/etc --disable-static
+  ./configure --prefix=/usr --sysconfdir=/etc --disable-static
   make
 }
 

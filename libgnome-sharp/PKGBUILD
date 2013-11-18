@@ -5,9 +5,9 @@
 pkgbase=gnome-sharp
 pkgname=('libgnome-sharp')
 pkgdesc="Mono bindings for libgnome"
-depends=('art-sharp' 'gnome-vfs-sharp' 'libgnomeui' 'mono-extra')
+depends=('art-sharp' 'gnome-vfs-sharp' 'libgnomeui')
 pkgver=2.24.2
-pkgrel=3
+pkgrel=4
 arch=(i686 x86_64)
 license=(LGPL)
 url="http://gtk-sharp.sourceforge.net"
@@ -22,7 +22,7 @@ build() {
   mkdir -p "${MONO_SHARED_DIR}"
 
   cd "${srcdir}/${pkgbase}-${pkgver}"
-  ./configure --prefix=/extra/usr --sysconfdir=/extra/etc
+  ./configure --prefix=/usr --sysconfdir=/etc
   make
 }
 package() {

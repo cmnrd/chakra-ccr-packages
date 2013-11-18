@@ -5,9 +5,9 @@
 _pkgbase=gnome-sharp
 pkgname=('gnome-vfs-sharp')
 pkgdesc="Mono bindings for GNOME-VFS"
-depends=('gtk-sharp-2' 'gnome-vfs' 'mono-extra')
+depends=('gtk-sharp-2' 'gnome-vfs')
 pkgver=2.24.2
-pkgrel=3
+pkgrel=4
 arch=(i686 x86_64)
 license=(LGPL)
 url="http://gtk-sharp.sourceforge.net"
@@ -22,7 +22,7 @@ build() {
   mkdir -p "${MONO_SHARED_DIR}"
 
   cd "${srcdir}/${_pkgbase}-${pkgver}"
-  ./configure --prefix=/extra/usr --sysconfdir=/extra/etc
+  ./configure --prefix=/usr --sysconfdir=/etc
   make
 }
 package() {

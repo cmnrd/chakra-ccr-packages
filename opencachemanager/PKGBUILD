@@ -3,13 +3,13 @@
 
 pkgname=opencachemanager
 pkgver=1.0.14
-pkgrel=2
+pkgrel=3
 pkgdesc="Easy to use, linux based program for managing your geocaches"
 arch=('any')
 url="http://opencachemanage.sourceforge.net/"
 license=('GPL')
 depends=('libgnome-sharp' 'gpsbabel' 'mono' 'ndesk-dbus-glib' 'shared-mime-info' 'webkit-sharp' 
-         'gconf-sharp' 'mono-extra')
+         'gconf-sharp')
 optdepends=('qlandkartegt: display cache on map'
             'gpsbabel: send cache to GPS')
 install=$pkgname.install
@@ -19,7 +19,7 @@ sha256sums=('b7119be0203c73d5416b505fdcb7bfe59efe46f9375bcb22b39b4ebba75301cb')
 build() {
   cd ${srcdir}/$pkgname-$pkgver
 
-  ./configure --prefix=/extra/usr
+  ./configure --prefix=/usr
   make
 }
 
