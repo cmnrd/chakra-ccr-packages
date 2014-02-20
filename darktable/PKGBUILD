@@ -5,7 +5,7 @@
 # Contributor: Johannes Hanika <hanatos at gmail dot com>
 
 pkgname=darktable
-pkgver=1.4
+pkgver=1.4.1
 _pkgver=1.4
 pkgrel=3
 pkgdesc="Utility to organize and develop raw images"
@@ -20,7 +20,7 @@ optdepends=('librsvg')
 install=darktable.install
 options=(!libtool)
 source=(http://downloads.sourceforge.net/project/darktable/darktable/${_pkgver}/darktable-$pkgver.tar.xz)
-md5sums=('896416931ded4579f528cd11edad470c')
+md5sums=('78252618bb7b1df30109ef5484d46f3c')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
