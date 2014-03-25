@@ -1,0 +1,31 @@
+# Maintainer: Christian Menard <chrism333@gmx.de>
+# Contributor: Alessandro Sagratini <ale_sagra at hotmail dot com>
+# Contributor: Justin Davis <jrcd83@gmail.com>
+pkgname=perl-sane
+pkgver=0.05
+pkgrel=3
+pkgdesc="Perl extension for the SANE (Scanner Access Now Easy) Project"
+arch=('i686' 'x86_64')
+url='http://search.cpan.org/dist/Sane'
+license=('PerlArtistic' 'GPL')
+options=('!emptydirs')
+changelog=Changes
+depends=('perl' 'perl-extutils-depends' 'perl-extutils-pkgconfig' 'sane')
+source=(http://search.cpan.org/CPAN/authors/id/R/RA/RATCLIFFE/Sane-$pkgver.tar.gz)
+md5sums=('ad42db3b9173a82e02490283665416a5')
+
+build() {
+	cd "$srcdir/Sane-$pkgver"
+
+	# install module in vendor directories.
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor || return 1
+	make || return 1
+}
+
+package() {
+	cd "$srcdir/Sane-$pkgver"
+	make install DESTDIR=${pkgdir} || return 1
+	# remove perllocal.pod and .packlist
+	find "$pkgdir" -name perllocal.pod -delete
+	find "$pkgdir" -name .packlist -delete
+}

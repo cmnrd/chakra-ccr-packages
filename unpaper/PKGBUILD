@@ -1,0 +1,36 @@
+# Maintainer: Christian Menard <chrism333@gmx.de>
+# Contributor: Sergej Pupykin <pupykin.s+arch@gmail.com>
+# Contributor: Andreas Hauser <andy-aur@splashground.de>
+
+pkgname=unpaper
+pkgver=5.1
+pkgrel=1
+pkgdesc="post-processing tool for scanned sheets of paper"
+arch=('i686' 'x86_64')
+#url="http://$pkgname.berlios.de/"
+url="https://github.com/Flameeyes/unpaper"
+license="GPL"
+depends=()
+makedepends=('gcc' 'libxslt')
+source=("$pkgname-${pkgver}.tar.gz::https://github.com/Flameeyes/unpaper/tarball/unpaper-$pkgver"
+        unpaper-automake.patch)
+md5sums=('06fe02a2e460c0ea218b6cd05bf573fe'
+         '44096cf78a0cc0524dd8d187daa81556')
+
+build() {
+  cd $srcdir/Flameeyes-unpaper-*
+  
+  patch -i "${srcdir}/unpaper-automake.patch"
+  
+  aclocal
+  automake --add-missing
+  autoconf
+  [ -f Makefile ] || ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd $srcdir/Flameeyes-unpaper-*
+  make install DESTDIR=$pkgdir
+}
+ 

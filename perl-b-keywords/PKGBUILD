@@ -1,0 +1,32 @@
+# Maintainer: Christian Menard <chrism333@gmx.de>
+# Contributor: Alessandro Sagratini <ale_sagra at hotmail dot com>
+# Contributor: Justin Davis <jrcd83@gmail.com>
+
+pkgname=perl-b-keywords
+pkgver=1.13
+pkgrel=1
+pkgdesc="Lists of reserved barewords and symbol names"
+url='http://search.cpan.org/dist/B-Keywords'
+arch=('any')
+license=('PerlArtistic' 'GPL')
+options=('!emptydirs')
+depends=('perl')
+changelog=Changes
+source=(http://search.cpan.org/CPAN/authors/id/R/RU/RURBAN/B-Keywords-$pkgver.tar.gz)
+md5sums=('fe57415a76a423645c31281fe508bf46')
+
+build() {
+	cd "$srcdir/B-Keywords-$pkgver"
+
+	# install module in vendor directories.
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor || return 1
+	make || return 1
+}
+
+package() {
+	cd "$srcdir/B-Keywords-$pkgver"
+	make install DESTDIR=${pkgdir} || return 1
+	# remove perllocal.pod and .packlist
+	find "$pkgdir" -name perllocal.pod -delete
+	find "$pkgdir" -name .packlist -delete
+}

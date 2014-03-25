@@ -1,0 +1,11 @@
+--- configure.ac~	2013-07-08 11:06:51.000000000 +0200
++++ configure.ac	2014-03-23 15:18:11.147192801 +0100
+@@ -2,7 +2,7 @@
+ 
+ AC_INIT([unpaper], [5.1], [https://github.com/Flameeyes/unpaper/issues], , [https://github.com/Flameeyes/unpaper])
+ 
+-AM_INIT_AUTOMAKE([1.13 dist-xz no-dist-gzip foreign])
++AM_INIT_AUTOMAKE([1.11.6 dist-xz no-dist-gzip foreign])
+ AM_SILENT_RULES([yes])
+ AM_MAINTAINER_MODE([enable])
+ 

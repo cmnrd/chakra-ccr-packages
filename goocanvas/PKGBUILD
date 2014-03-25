@@ -1,0 +1,28 @@
+# Maintainer: Christian Menard <chrism333@gmx.de>
+# Contributor: Adrián Chaves Fernández (Gallaecio) <adriyetichaves gmail.com>
+
+pkgname=goocanvas
+pkgver=1.0.0
+_pkgver=1.0
+pkgrel=1
+pkgdesc="A cairo canvas widget for GTK+."
+arch=(i686 x86_64)
+url="http://live.gnome.org/GooCanvas"
+options=('!libtool' 'docs')
+license=("LGPL")
+depends=('gtk2')
+changelog=ChangeLog
+source=(http://ftp.gnome.org/pub/GNOME/sources/$pkgname/$_pkgver/$pkgname-$pkgver.tar.gz)
+md5sums=('0b6e236abd8dfc83894e56bdd10add91')
+
+build() {
+  cd $srcdir/$pkgname-$pkgver
+  ./configure \
+    --prefix=/usr
+  make
+}
+
+package() {
+  cd $srcdir/$pkgname-$pkgver
+  make DESTDIR=$pkgdir install
+}
